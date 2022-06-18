@@ -1,5 +1,5 @@
 local core_modules={
-	"core.options",
+  "core.options",
   "core.mappings",
   "core.util"
 }

@@ -30,7 +30,7 @@ M.get = function(theme)
       theme = vim.g.nvchad_theme
    end
 
-   return require("hl_themes." .. theme)
+   return require('colors.onedark')
 end
 
 return M

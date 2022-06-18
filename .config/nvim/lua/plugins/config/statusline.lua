@@ -1,390 +1,210 @@
-local colors = require("colors").get()
-local lsp = require "feline.providers.lsp"
+local fn = vim.fn
 
-local icon_styles = {
-  default = {
+local sep_style = {
+   default = {
       left = "",
       right = " ",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
-   },
-   arrow = {
-      left = "",
-      right = "",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
-   },
-
-   block = {
-      left = " ",
-      right = " ",
-      main_icon = "   ",
-      vi_mode_icon = "  ",
-      position_icon = "  ",
    },
 
    round = {
       left = "",
       right = "",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
    },
 
-   slant = {
-      left = " ",
-      right = " ",
-      main_icon = "  ",
-      vi_mode_icon = " ",
-      position_icon = " ",
+   block = {
+      left = "█",
+      right = "█",
+   },
+
+   arrow = {
+      left = "",
+      right = "",
    },
 }
 
-local config={ -- statusline related options
--- these are filetypes, not pattern matched
--- shown filetypes will overrule hidden filetypes
-hidden = {
-   "help",
-   "dashboard",
-   "NvimTree",
-   "terminal",
-},
--- show short statusline on small screens
-shortline = true,
-shown = {},
--- default, round , slant , block , arrow
-style = "arrow",
-}
--- statusline style
-local user_statusline_style = config.style
-local statusline_style = icon_styles[user_statusline_style]
--- if show short statusline on small screens
-local shortline = config.shortline == false and true
+local user_sep_style = "default"
+local sep_l = sep_style[user_sep_style]["left"]
+local sep_r = sep_style[user_sep_style]["right"]
 
--- Initialize the components table
-local components = {
-   active = {},
-   inactive = {},
-}
-
--- Initialize left, mid and right
-table.insert(components.active, {})
-table.insert(components.active, {})
-table.insert(components.active, {})
-
-components.active[1][1] = {
-   provider = statusline_style.main_icon,
-
-   hl = {
-      fg = colors.statusline_bg,
-      bg = colors.nord_blue,
-   },
-
-   right_sep = { str = statusline_style.right, hl = {
-      fg = colors.nord_blue,
-      bg = colors.lightbg,
-   } },
+local modes = {
+   ["n"] = { "NORMAL", "St_NormalMode" },
+   ["niI"] = { "NORMAL i", "St_NormalMode" },
+   ["niR"] = { "NORMAL r", "St_NormalMode" },
+   ["niV"] = { "NORMAL v", "St_NormalMode" },
+   ["no"] = { "N-PENDING", "St_NormalMode" },
+   ["i"] = { "INSERT", "St_InsertMode" },
+   ["ic"] = { "INSERT", "St_InsertMode" },
+   ["ix"] = { "INSERT completion", "St_InsertMode" },
+   ["t"] = { "TERMINAL", "St_TerminalMode" },
+   ["nt"] = { "NTERMINAL", "St_NTerminalMode" },
+   ["v"] = { "VISUAL", "St_VisualMode" },
+   ["V"] = { "V-LINE", "St_VisualMode" },
+   [""] = { "V-BLOCK", "St_VisualMode" },
+   ["R"] = { "REPLACE", "St_ReplaceMode" },
+   ["Rv"] = { "V-REPLACE", "St_ReplaceMode" },
+   ["s"] = { "SELECT", "St_SelectMode" },
+   ["S"] = { "S-LINE", "St_SelectMode" },
+   [""] = { "S-BLOCK", "St_SelectMode" },
+   ["c"] = { "COMMAND", "St_CommandMode" },
+   ["cv"] = { "COMMAND", "St_CommandMode" },
+   ["ce"] = { "COMMAND", "St_CommandMode" },
+   ["r"] = { "PROMPT", "St_ConfirmMode" },
+   ["rm"] = { "MORE", "St_ConfirmMode" },
+   ["r?"] = { "CONFIRM", "St_ConfirmMode" },
+   ["!"] = { "SHELL", "St_TerminalMode" },
 }
 
-components.active[1][2] = {
-   provider = function()
-      local filename = vim.fn.expand "%:t"
-      local extension = vim.fn.expand "%:e"
-      local icon = require("nvim-web-devicons").get_icon(filename, extension)
-      if icon == nil then
-         icon = " "
-         return icon
+local M = {}
+
+M.mode = function()
+   local m = vim.api.nvim_get_mode().mode
+   local current_mode = "%#" .. modes[m][2] .. "#" .. "  " .. modes[m][1]
+   local mode_sep1 = "%#" .. modes[m][2] .. "Sep" .. "#" .. sep_r
+
+   return current_mode .. mode_sep1 .. "%#ST_EmptySpace#" .. sep_r
+end
+
+M.fileicon = function()
+   local icon = "  "
+
+   local filename = fn.fnamemodify(fn.expand "%:t", ":r")
+   local extension = fn.expand "%:e"
+
+   if filename ~= "" then
+      local devicons_present, devicons = pcall(require, "nvim-web-devicons")
+
+      if devicons_present then
+         local ft_icon = devicons.get_icon(filename, extension)
+         icon = (ft_icon ~= nil and " " .. ft_icon) or ""
       end
-      return " " .. icon .. " " .. filename .. " "
-   end,
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 70
-   end,
-   hl = {
-      fg = colors.white,
-      bg = colors.lightbg,
-   },
+   end
 
-   right_sep = { str = statusline_style.right, hl = { fg = colors.lightbg, bg = colors.lightbg2 } },
-}
+   return "%#St_file_info#" .. icon
+end
 
-components.active[1][3] = {
-   provider = function()
-      local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-      return "  " .. dir_name .. " "
-   end,
+M.filename = function()
+   local filename = fn.fnamemodify(fn.expand "%:t", ":r")
 
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 80
-   end,
+   if filename == "" then
+      filename = "Empty "
+   else
+      filename = " " .. filename .. " "
+   end
 
-   hl = {
-      fg = colors.grey_fg2,
-      bg = colors.lightbg2,
-   },
-   right_sep = {
-      str = statusline_style.right,
-      hi = {
-         fg = colors.lightbg2,
-         bg = colors.statusline_bg,
-      },
-   },
-}
+   return "%#St_file_info#" .. filename .. "%#St_file_sep#" .. sep_r
+end
 
-components.active[1][4] = {
-   provider = "git_diff_added",
-   hl = {
-      fg = colors.grey_fg2,
-      bg = colors.statusline_bg,
-   },
-   icon = " ",
-}
--- diffModfified
-components.active[1][5] = {
-   provider = "git_diff_changed",
-   hl = {
-      fg = colors.grey_fg2,
-      bg = colors.statusline_bg,
-   },
-   icon = "   ",
-}
--- diffRemove
-components.active[1][6] = {
-   provider = "git_diff_removed",
-   hl = {
-      fg = colors.grey_fg2,
-      bg = colors.statusline_bg,
-   },
-   icon = "  ",
-}
-
-components.active[1][7] = {
-   provider = "diagnostic_errors",
-   enabled = function()
-      return lsp.diagnostics_exist "Error"
-   end,
-
-   hl = { fg = colors.red },
-   icon = "  ",
-}
-
-components.active[1][8] = {
-   provider = "diagnostic_warnings",
-   enabled = function()
-      return lsp.diagnostics_exist "Warning"
-   end,
-   hl = { fg = colors.yellow },
-   icon = "  ",
-}
-
-components.active[1][9] = {
-   provider = "diagnostic_hints",
-   enabled = function()
-      return lsp.diagnostics_exist "Hint"
-   end,
-   hl = { fg = colors.grey_fg2 },
-   icon = "  ",
-}
-
-components.active[1][10] = {
-   provider = "diagnostic_info",
-   enabled = function()
-      return lsp.diagnostics_exist "Information"
-   end,
-   hl = { fg = colors.green },
-   icon = "  ",
-}
-
-components.active[2][1] = {
-   provider = function()
-      local Lsp = vim.lsp.util.get_progress_messages()[1]
-      if Lsp then
-         local msg = Lsp.message or ""
-         local percentage = Lsp.percentage or 0
-         local title = Lsp.title or ""
-         local spinners = {
-            "",
-            "",
-            "",
-         }
-
-         local success_icon = {
-            "",
-            "",
-            "",
-         }
-
-         local ms = vim.loop.hrtime() / 1000000
-         local frame = math.floor(ms / 120) % #spinners
-
-         if percentage >= 70 then
-            return string.format(" %%<%s %s %s (%s%%%%) ", success_icon[frame + 1], title, msg, percentage)
-         else
-            return string.format(" %%<%s %s %s (%s%%%%) ", spinners[frame + 1], title, msg, percentage)
-         end
-      end
+M.git = function()
+   if not vim.b.gitsigns_head or vim.b.gitsigns_git_status then
       return ""
-   end,
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 80
-   end,
-   hl = { fg = colors.green },
-}
+   end
 
-components.active[3][1] = {
-   provider = function()
-      if next(vim.lsp.buf_get_clients()) ~= nil then
-         return "  LSP"
-      else
-         return ""
+   local git_status = vim.b.gitsigns_status_dict
+
+   local added = (git_status.added and git_status.added ~= 0) and ("  " .. git_status.added) or ""
+   local changed = (git_status.changed and git_status.changed ~= 0) and ("  " .. git_status.changed) or ""
+   local removed = (git_status.removed and git_status.removed ~= 0) and ("  " .. git_status.removed) or ""
+   local branch_name = "   " .. git_status.head .. " "
+   local git_info = branch_name .. added .. changed .. removed
+
+   return "%#St_gitIcons#" .. git_info
+end
+
+-- LSP STUFF
+M.LSP_progress = function()
+   local Lsp = vim.lsp.util.get_progress_messages()[1]
+
+   if vim.o.columns < 120 or not Lsp then
+      return ""
+   end
+
+   local msg = Lsp.message or ""
+   local percentage = Lsp.percentage or 0
+   local title = Lsp.title or ""
+   local spinners = { "", "" }
+   local ms = vim.loop.hrtime() / 1000000
+   local frame = math.floor(ms / 120) % #spinners
+   local content = string.format(" %%<%s %s %s (%s%%%%) ", spinners[frame + 1], title, msg, percentage)
+
+   return ("%#St_LspProgress#" .. content) or ""
+end
+
+M.LSP_Diagnostics = function()
+   if not #vim.diagnostic.get(0) then
+      return ""
+   end
+
+   local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+   local warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+   local hints = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+   local info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+
+   errors = (errors and errors > 0) and ("%#St_lspError#" .. " " .. errors .. " ") or ""
+   warnings = (warnings and warnings > 0) and ("%#St_lspWarning#" .. "  " .. warnings .. " ") or ""
+   hints = (hints and hints > 0) and ("%#St_lspHints#" .. "ﯧ " .. hints .. " ") or ""
+   info = (info and info > 0) and ("%#St_lspInfo#" .. " " .. info .. " ") or ""
+
+   return errors .. warnings .. hints .. info
+end
+
+M.LSP_status = function()
+   local clients = vim.lsp.get_active_clients()
+   local names = {}
+   for _, client in ipairs(clients) do
+      if client.attached_buffers[vim.api.nvim_get_current_buf()] then
+         table.insert(names, client.name)
       end
-   end,
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 70
-   end,
-   hl = { fg = colors.grey_fg2, bg = colors.statusline_bg },
-}
+   end
+  
+   local name = false
+   if next(names) then
+      name = table.concat(names, '|')
+   end
+   
+   local content = name and "   LSP ~ " .. name .. " " or false
+   return content and ("%#St_LspStatus#" .. content) or ""
+end
 
-components.active[3][2] = {
-   provider = "git_branch",
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 70
-   end,
-   hl = {
-      fg = colors.grey_fg2,
-      bg = colors.statusline_bg,
-   },
-   icon = "  ",
-}
+M.cwd = function()
+   local left_sep = "%#St_cwd_sep#" .. sep_l
+   local dir_icon = "%#St_cwd_icon#" .. " "
+   local dir_name = "%#St_cwd_text#" .. " " .. fn.fnamemodify(fn.getcwd(), ":t") .. " "
+   return (vim.o.columns > 120 and left_sep .. dir_icon .. dir_name) or ""
+end
 
-components.active[3][3] = {
-   provider = " " .. statusline_style.left,
-   hl = {
-      fg = colors.one_bg2,
-      bg = colors.statusline_bg,
-   },
-}
+M.cursor_position = function()
+   local left_sep = "%#St_pos_sep#" .. sep_l
+   local icon = "%#St_pos_icon#" .. " "
 
-local mode_colors = {
-   ["n"] = { "NORMAL", colors.red },
-   ["no"] = { "N-PENDING", colors.red },
-   ["i"] = { "INSERT", colors.dark_purple },
-   ["ic"] = { "INSERT", colors.dark_purple },
-   ["t"] = { "TERMINAL", colors.green },
-   ["v"] = { "VISUAL", colors.cyan },
-   ["V"] = { "V-LINE", colors.cyan },
-   [""] = { "V-BLOCK", colors.cyan },
-   ["R"] = { "REPLACE", colors.orange },
-   ["Rv"] = { "V-REPLACE", colors.orange },
-   ["s"] = { "SELECT", colors.nord_blue },
-   ["S"] = { "S-LINE", colors.nord_blue },
-   [""] = { "S-BLOCK", colors.nord_blue },
-   ["c"] = { "COMMAND", colors.pink },
-   ["cv"] = { "COMMAND", colors.pink },
-   ["ce"] = { "COMMAND", colors.pink },
-   ["r"] = { "PROMPT", colors.teal },
-   ["rm"] = { "MORE", colors.teal },
-   ["r?"] = { "CONFIRM", colors.teal },
-   ["!"] = { "SHELL", colors.green },
-}
+   local current_line = fn.line "."
+   local total_line = fn.line "$"
+   local text = math.modf((current_line / total_line) * 100) .. tostring "%%"
 
-local chad_mode_hl = function()
-   return {
-      fg = mode_colors[vim.fn.mode()][2],
-      bg = colors.one_bg,
+   if current_line == 1 then
+      text = "Top "
+   elseif current_line == total_line then
+      text = "Bot "
+   end
+
+   return left_sep .. icon .. "%#St_pos_text#" .. " " .. text
+end
+
+M.run = function()
+   return table.concat {
+      M.mode(),
+      M.fileicon(),
+      M.filename(),
+      M.git(),
+
+      "%=",
+      M.LSP_progress(),
+      "%=",
+
+      M.LSP_Diagnostics(),
+      M.LSP_status(),
+      M.cwd(),
+      M.cursor_position(),
    }
 end
 
-components.active[3][4] = {
-   provider = statusline_style.left,
-   hl = function()
-      return {
-         fg = mode_colors[vim.fn.mode()][2],
-         bg = colors.one_bg2,
-      }
-   end,
-}
-
-components.active[3][5] = {
-   provider = statusline_style.vi_mode_icon,
-   hl = function()
-      return {
-         fg = colors.statusline_bg,
-         bg = mode_colors[vim.fn.mode()][2],
-      }
-   end,
-}
-
-components.active[3][6] = {
-   provider = function()
-      return " " .. mode_colors[vim.fn.mode()][1] .. " "
-   end,
-   hl = chad_mode_hl,
-}
-
-components.active[3][7] = {
-   provider = statusline_style.left,
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 90
-   end,
-   hl = {
-      fg = colors.grey,
-      bg = colors.one_bg,
-   },
-}
-
-components.active[3][8] = {
-   provider = statusline_style.left,
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 90
-   end,
-   hl = {
-      fg = colors.green,
-      bg = colors.grey,
-   },
-}
-
-components.active[3][9] = {
-   provider = statusline_style.position_icon,
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 90
-   end,
-   hl = {
-      fg = colors.black,
-      bg = colors.green,
-   },
-}
-
-components.active[3][10] = {
-   provider = function()
-      local current_line = vim.fn.line "."
-      local total_line = vim.fn.line "$"
-
-      if current_line == 1 then
-         return " Top "
-      elseif current_line == vim.fn.line "$" then
-         return " Bot "
-      end
-      local result, _ = math.modf((current_line / total_line) * 100)
-      return " " .. result .. "%% "
-   end,
-
-   enabled = shortline or function(winid)
-      return vim.api.nvim_win_get_width(winid) > 90
-   end,
-
-   hl = {
-      fg = colors.green,
-      bg = colors.one_bg,
-   },
-}
-
-require("feline").setup {
-   colors = {
-      bg = colors.statusline_bg,
-      fg = colors.fg,
-   },
-   components = components,
-}
+return M
