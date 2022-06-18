@@ -12,6 +12,7 @@ fish package manager? | omf
 text editor | nvim
 terminal multiplexer | tmux
 fuzzy finder | fzf
+tiling window manager | yabai
 
 ## TODO
 
