@@ -7,5 +7,11 @@ return {
       require('custom.plugins.config.cmp')
     end
   },
-  ["tpope/vim-fugitive"] = { cmd = 'G' }
+  ["tpope/vim-fugitive"] = { cmd = 'G' },
+  ["jose-elias-alvarez/null-ls.nvim"] = {
+    after = "nvim-lspconfig",
+    config = function()
+      require("custom.plugins.config.null-ls").setup()
+    end,
+  }
 }
