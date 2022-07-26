@@ -11,11 +11,6 @@ M.plugins = {
     "NvChad/nvterm"
   },
   user = require('custom.plugins'),
-  options = {
-    lspconfig = {
-      setup_lspconf = "custom.plugins.config.lsp"
-    }
-  }
 }
 
 return M
