@@ -17,6 +17,12 @@ local sources = {
 
   -- Shell
   b.formatting.shfmt,
+
+  -- LaTeX
+  b.formatting.latexindent,
+
+  -- Haskell
+  b.formatting.stylish_haskell
 }
 
 local M = {}
