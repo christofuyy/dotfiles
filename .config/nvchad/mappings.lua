@@ -61,7 +61,7 @@ M.lsp = {
     },
     ["<leader>f"] = {
       function()
-        vim.lsp.buf.formatting()
+        vim.lsp.buf.format { async = true } -- update from deprecated
       end,
       "lsp formatting"
     },
@@ -70,7 +70,32 @@ M.lsp = {
         require('nvchad_ui.renamer').open()
       end,
       "lsp rename"
-    }
+    },
+    -- Restating defaults because lsp mappings don't load with nvim-jdtls for some reason
+    ["gd"] = {
+      function()
+        vim.lsp.buf.definition()
+      end,
+      "lsp definition",
+    },
+    ["K"] = {
+      function()
+        vim.lsp.buf.hover()
+      end,
+      "lsp hover",
+    },
+    ["<leader>ca"] = {
+      function()
+        vim.lsp.buf.code_action()
+      end,
+      "lsp code_action",
+    },
+    ["gr"] = {
+      function()
+        vim.lsp.buf.references()
+      end,
+      "lsp references",
+    },
   }
 }
 
