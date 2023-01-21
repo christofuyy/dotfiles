@@ -9,9 +9,6 @@ local sources = {
   b.formatting.prettierd.with { filetypes = { "html", "markdown", "css" } },
   b.formatting.deno_fmt,
 
-  -- Java
-  b.formatting.google_java_format,
-
   -- Lua
   b.formatting.stylua,
 
