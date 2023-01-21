@@ -14,4 +14,13 @@ terminal multiplexer | tmux
 fuzzy finder | fzf
 tiling window manager | yabai
 
+## Notes
+
+### Fish
+
+To prevent conda from activating base env by default:
+```
+conda config --set auto_activate_base false
+```
+
 ## TODO
