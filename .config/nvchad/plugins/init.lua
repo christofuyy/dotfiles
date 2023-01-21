@@ -27,4 +27,11 @@ return {
 		end,
 		ft = { "markdown" },
 	},
+  -- nvim-lspconfig not sufficient. ex. annotations are not generated without nvim-jdtls
+	["mfussenegger/nvim-jdtls"] = {
+    config = function()
+      require("custom.plugins.config.nvim-jdtls")
+    end,
+    ft = { "java" }
+  },
 }
