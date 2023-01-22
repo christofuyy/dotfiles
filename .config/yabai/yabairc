@@ -16,6 +16,10 @@ yabai -m config window_gap     8
 yabai -m config --space 2 window_gap 0
 
 # window mods
+yabai -m config window_border on
+yabai -m config window_border_width 4
+yabai -m config window_border_radius 8
+yabai -m config active_window_border_color 0xffe06c75
 
 # workspaces
 yabai -m space 1 --label I
