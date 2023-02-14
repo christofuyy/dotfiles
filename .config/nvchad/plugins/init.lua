@@ -1,4 +1,5 @@
 return {
+  ["NvChad/nvterm"] = false,
 	["goolord/alpha-nvim"] = {
 		disable = false,
 	},

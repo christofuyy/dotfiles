@@ -6,11 +6,6 @@ M.ui = {
 
 M.mappings = require('custom.mappings')
 
-M.plugins = {
-  remove = {
-    "NvChad/nvterm"
-  },
-  user = require('custom.plugins'),
-}
+M.plugins = require('custom.plugins')
 
 return M
