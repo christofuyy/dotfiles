@@ -30,10 +30,13 @@ return {
 	},
   -- nvim-lspconfig not sufficient. ex. annotations are not generated without nvim-jdtls
 	["mfussenegger/nvim-jdtls"] = {
-    config = function()
-      require("custom.plugins.config.nvim-jdtls")
-    end,
-    ft = { "java" }
+    -- nvim-jdtls does not work with this lazy config; only works by putting nvim-jdtls config
+    -- in ~/.config/nvim/ftplugin
+    --
+    -- config = function()
+    --   require("custom.plugins.config.nvim-jdtls")
+    -- end,
+    -- ft = { "java" }
   },
   ["windwp/nvim-ts-autotag"] = {
     ft = { "html", "javascriptreact" , "typescriptreact"},

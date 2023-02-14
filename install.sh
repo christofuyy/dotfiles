@@ -2,6 +2,8 @@
 
 # text editor
 ~/.dotfiles/.config/nvchad/install.sh 
+mkdir -p ~/.config/nvim/ftplugin
+ln -s ~/.dotfiles/.config/nvchad/plugins/config/nvim-jdtls.lua ~/.config/nvim/ftplugin/java.lua
 
 # shell
 mkdir -p ~/.config/omf
