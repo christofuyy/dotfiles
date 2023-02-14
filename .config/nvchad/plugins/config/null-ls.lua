@@ -6,8 +6,7 @@ local sources = {
   null_ls.builtins.formatting.black,
 
   -- Web dev
-  b.formatting.prettierd.with { filetypes = { "html", "markdown", "css" } },
-  b.formatting.deno_fmt,
+  b.formatting.prettierd,
 
   -- Lua
   b.formatting.stylua,
