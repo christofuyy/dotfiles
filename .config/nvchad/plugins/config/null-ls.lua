@@ -19,7 +19,10 @@ local sources = {
   b.formatting.latexindent,
 
   -- Haskell
-  b.formatting.stylish_haskell
+  b.formatting.stylish_haskell,
+
+  -- Rust
+  b.formatting.rustfmt
 }
 
 local M = {}
