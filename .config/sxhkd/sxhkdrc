@@ -119,3 +119,19 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# media controls
+XF86AudioPlay
+  playerctl play-pause
+
+XF86AudioNext
+  playerctl next
+
+XF86AudioPrev
+  playerctl previous
+
+XF86AudioMute
+	amixer -D pulse sset Master toggle
+
+XF86Audio{Raise,Lower}Volume
+	amixer -D pulse sset Master 5%{+,-}
