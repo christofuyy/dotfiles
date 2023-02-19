@@ -22,3 +22,7 @@ ln -s ~/.dotfiles/.config/bspwm/bspwmrc ~/.config/bspwm/bspwmrc
 
 mkdir -p ~/.config/sxhkd
 ln -s ~/.dotfiles/.config/sxhkd/sxhkdrc ~/.config/sxhkd/sxhkdrc
+
+# polybar
+mkdir -p ~/.config/polybar
+ln -s ~/.dotfiles/.config/polybar/config.ini ~/.config/polybar/config.ini
