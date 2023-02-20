@@ -26,3 +26,7 @@ ln -s ~/.dotfiles/.config/sxhkd/sxhkdrc ~/.config/sxhkd/sxhkdrc
 # polybar
 mkdir -p ~/.config/polybar
 ln -s ~/.dotfiles/.config/polybar/config.ini ~/.config/polybar/config.ini
+
+# picom
+mkdir -p ~/.config/picom
+ln -s ~/.dotfiles/.config/picom/picom ~/.config/picom/picom
