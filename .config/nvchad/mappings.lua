@@ -105,4 +105,32 @@ M.git = {
   }
 }
 
+M.copilot = {
+  n = {
+    ["<leader>cp"] = {
+      function()
+        require("copilot.panel").open({"bot", 0.3})
+      end
+    }
+  },
+  i = {
+    ["<C-f>"] = {
+      function()
+        require("copilot.suggestion").accept()
+      end,
+      "accept Copilot suggestion"
+    },
+    ["<C-j>"] = {
+      function()
+        require("copilot.suggestion").next()
+      end
+    },
+    ["<C-k>"] = {
+      function()
+        require("copilot.suggestion").prev()
+      end
+    }
+  }
+}
+
 return M
