@@ -21,7 +21,13 @@ local sources = {
   b.formatting.stylish_haskell,
 
   -- Rust
-  b.formatting.rustfmt
+  b.formatting.rustfmt,
+
+  -- SQL
+  b.formatting.sql_formatter
+  -- b.formatting.sqlfluff.with({
+  --   extra_args={"--dialect","sqlite"}
+  -- })
 }
 
 local M = {}
