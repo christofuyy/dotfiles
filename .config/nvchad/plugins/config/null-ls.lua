@@ -24,10 +24,13 @@ local sources = {
   b.formatting.rustfmt,
 
   -- SQL
-  b.formatting.sql_formatter
+  b.formatting.sql_formatter,
   -- b.formatting.sqlfluff.with({
   --   extra_args={"--dialect","sqlite"}
   -- })
+
+  -- C++
+  b.formatting.clang_format
 }
 
 local M = {}
