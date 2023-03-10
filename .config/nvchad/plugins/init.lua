@@ -51,8 +51,8 @@ return {
   },
   ["zbirenbaum/copilot.lua"] = {
     cmd = "Copilot",
+    event = "InsertEnter",
     config = function()
-      vim.notify("Copilot plugin loaded", vim.log.levels.INFO)
       require("custom.plugins.config.copilot").setup()
     end
   }
