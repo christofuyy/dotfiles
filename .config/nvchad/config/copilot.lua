@@ -5,7 +5,7 @@ local M = {}
 M.setup = function()
 	copilot.setup({
 		panel = {
-			enabled = true,
+			enabled = false,
 			auto_refresh = false,
 			layout = {
 				position = "right", -- | top | left | right
