@@ -64,4 +64,50 @@ return {
 			require("custom.config.copilot").setup()
 		end,
 	},
+	{
+		"williamboman/mason.nvim",
+		opts = {
+			ensure_installed = {
+				-- lua
+				"lua-language-server",
+				"stylua",
+
+				-- rust
+				"rust-analyzer",
+				"rustfmt",
+
+				-- python
+				"pyright",
+				"black",
+
+				-- java
+				"jdtls",
+
+				-- javascript / typescript
+				"typescript-language-server",
+				"prettierd",
+
+				-- cpp
+				"clangd",
+				"clang-format",
+
+				-- sql
+				"sqlls",
+				"sql-formatter",
+
+				-- haskell
+				"haskell-language-server",
+
+				-- latex
+				"ltex-ls",
+				"latexindent",
+
+				-- docker
+				"dockerfile-language-server",
+
+				-- yaml
+				"yaml-language-server",
+			},
+		},
+	},
 }
