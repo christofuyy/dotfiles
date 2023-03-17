@@ -110,4 +110,10 @@ return {
 			},
 		},
 	},
+	{
+		"nvim-treesitter/nvim-treesitter",
+		opts = function()
+			require("custom.config.treesitter")
+		end,
+	},
 }
