@@ -28,8 +28,8 @@ return {
 	},
 	{
 		"iamcco/markdown-preview.nvim",
-		run = "cd app && npm install",
-		setup = function()
+		build = "cd app && npm install",
+		init = function()
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { "markdown" },
@@ -49,11 +49,7 @@ return {
 		"windwp/nvim-ts-autotag",
 		ft = { "html", "javascriptreact", "typescriptreact" },
 		config = function()
-			local present, autotag = pcall(require, "nvim-ts-autotag")
-
-			if present then
-				autotag.setup()
-			end
+			require("nvim-ts-autotag").setup()
 		end,
 	},
 	{
@@ -113,7 +109,10 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		opts = function()
-			require("custom.config.treesitter")
+			return require("custom.config.treesitter")
 		end,
+		dependencies = {
+			"windwp/nvim-ts-autotag",
+		},
 	},
 }
