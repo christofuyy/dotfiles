@@ -5,9 +5,11 @@ local options = {
 		"java",
 		"rust",
 		"typescript",
+		"tsx",
 		"javascript",
 		"cpp",
 
+		"comment",
 		"json",
 		"latex",
 		"yaml",
