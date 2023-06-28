@@ -1,0 +1,34 @@
+# restart
+ctrl + alt + cmd - r : brew services restart yabai
+
+# open terminal
+alt - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+
+# focus window
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+
+# move window
+alt + shift - h : yabai -m window --swap west
+alt + shift - j : yabai -m window --swap south
+alt + shift - k : yabai -m window --swap north
+alt + shift - l : yabai -m window --swap east
+
+# toggle floating mode
+alt - t : yabai -m window --toggle float;\
+          yabai -m window --grid 4:4:1:1:2:2
+
+# resize windows
+
+# Rearrange windows
+# rotate
+alt - r : yabai -m space --rotate 90
+# mirror
+alt - y : yabai -m space --mirror y-axis
+
+# workspaces
+alt + shift - u : yabai -m window --space 1
+alt + shift - i : yabai -m window --space 2
+alt + shift - o : yabai -m window --space 3
