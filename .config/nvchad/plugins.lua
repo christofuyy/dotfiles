@@ -82,7 +82,7 @@ return {
 				-- javascript / typescript
 				"typescript-language-server",
 				"prettierd",
-        "prisma-language-server",
+				"prisma-language-server",
 
 				-- cpp
 				"clangd",
