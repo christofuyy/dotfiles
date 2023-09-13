@@ -67,7 +67,7 @@ M.lsp = {
 		},
 		["<leader>rn"] = {
 			function()
-				require("nvchad_ui.renamer").open()
+				require("nvchad.renamer").open()
 			end,
 			"lsp rename",
 		},
