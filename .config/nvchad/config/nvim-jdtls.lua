@@ -54,3 +54,8 @@ local config = {
 }
 
 require("jdtls").start_or_attach(config)
+-- disable semantic highlighting from lsp for java files
+-- https://github.com/simrat39/rust-tools.nvim/issues/365
+for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+	vim.api.nvim_set_hl(0, group, {})
+end
