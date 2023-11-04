@@ -30,7 +30,12 @@ local sources = {
   -- })
 
   -- C++
-  b.formatting.clang_format
+  b.formatting.clang_format.with({
+    filetypes = { "c", "cpp", "h", "hpp" },
+  }),
+
+  -- Java
+  b.formatting.google_java_format,
 }
 
 local M = {}
