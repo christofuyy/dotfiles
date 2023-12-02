@@ -10,6 +10,7 @@ return {
 		end,
 	},
 	{ "tpope/vim-fugitive", cmd = "G" },
+	{ "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
 	{
 		"jose-elias-alvarez/null-ls.nvim",
 		config = function()

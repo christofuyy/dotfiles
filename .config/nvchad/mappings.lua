@@ -103,6 +103,7 @@ M.git = {
 	n = {
 		["<leader>gs"] = { "<cmd> :above G<CR>", "git status" },
     ["<leader>gl"] = { "<cmd> :G log --oneline<CR>", "git log" },
+    ["<leader>dv"] = { "<cmd> :DiffviewOpen<CR>", "diffview" },
 	},
 }
 
