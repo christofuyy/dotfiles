@@ -7,13 +7,13 @@ local servers = {
 	"clangd",
 	"tsserver",
 	"hls",
-	"ltex",
 	"dockerls",
 	"rust_analyzer",
 	"yamlls",
 	"sqlls",
 	"prismals",
 	"tailwindcss",
+	"lemminx",
 }
 
 for _, lsp in ipairs(servers) do
