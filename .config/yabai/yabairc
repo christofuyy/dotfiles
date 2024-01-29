@@ -1,6 +1,6 @@
 # startup
-sudo yabai --load-sa
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
 
 # layout
 yabai -m config layout bsp
@@ -16,10 +16,10 @@ yabai -m config window_gap     8
 yabai -m config --space 2 window_gap 0
 
 # window mods
-yabai -m config window_border on
-yabai -m config window_border_width 4
-yabai -m config window_border_radius 8
-yabai -m config active_window_border_color 0xffe06c75
+# yabai -m config window_border on
+# yabai -m config window_border_width 4
+# yabai -m config window_border_radius 8
+# yabai -m config active_window_border_color 0xffe06c75
 
 # workspaces
 yabai -m space 1 --label I
@@ -34,3 +34,5 @@ yabai -m config external_bar main:0:0
 # add 20 padding to the top and bottom of all spaces regardless of the display it belongs to
 # yabai -m config external_bar all:40:0
 yabai -m config external_bar all:0:0
+
+borders active_color=0xffe06c75 width=6.0 style=round &

@@ -1,5 +1,5 @@
 # restart
-ctrl + alt + cmd - r : brew services restart yabai
+ctrl + alt + cmd - r : yabai --stop-service; yabai --start-service
 
 # open terminal
 alt - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
