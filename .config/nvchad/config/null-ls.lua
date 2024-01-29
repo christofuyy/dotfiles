@@ -36,6 +36,9 @@ local sources = {
 
 	-- Java
 	b.formatting.google_java_format,
+
+  -- XML
+  b.formatting.xmlformat
 }
 
 local M = {}
