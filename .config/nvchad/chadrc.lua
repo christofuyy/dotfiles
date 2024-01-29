@@ -10,7 +10,7 @@ M.ui = {
   hl_add = {
 		DiffviewDiffAdd = { bg = { "green", -50 }, fg = "green" },
 		DiffviewDiffDelete = { bg = { "red", -50 } },
-		DiffviewDiffText = { bg = { "purple", -65 }, fg = "purple" },
+		DiffviewDiffText = { bg = { "blue", -25}, fg = {"blue", 20} },
 		DiffviewDiffChange = { bg = { "blue", -50 }, fg = "blue" },
   }
 }
