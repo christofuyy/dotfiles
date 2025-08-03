@@ -5,7 +5,7 @@ local lspconfig = require("lspconfig")
 local servers = {
 	"pyright",
 	"clangd",
-	"tsserver",
+	"ts_ls",
 	"hls",
 	"dockerls",
 	"rust_analyzer",
