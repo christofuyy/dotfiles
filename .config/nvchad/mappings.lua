@@ -61,7 +61,7 @@ M.lsp = {
 		},
 		["<leader>f"] = {
 			function()
-				vim.lsp.buf.format({ async = true }) -- update from deprecated
+				require("conform").format { lsp_fallback = true }
 			end,
 			"lsp formatting",
 		},

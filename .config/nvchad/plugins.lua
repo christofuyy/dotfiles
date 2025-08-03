@@ -1,5 +1,9 @@
 return {
 	{
+		"stevearc/conform.nvim",
+		opts = require("custom.config.conform"),
+	},
+	{
 		"NvChad/nvterm",
 		enabled = false,
 	},
@@ -12,20 +16,11 @@ return {
 	{ "tpope/vim-fugitive", cmd = "G" },
 	{ "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
 	{
-		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			require("custom.config.null-ls").setup()
-		end,
-	},
-	{
 		"neovim/nvim-lspconfig",
 		config = function()
 			require("plugins.configs.lspconfig")
 			require("custom.config.lsp")
 		end,
-		dependencies = {
-			"jose-elias-alvarez/null-ls.nvim",
-		},
 	},
 	{
 		"iamcco/markdown-preview.nvim",
