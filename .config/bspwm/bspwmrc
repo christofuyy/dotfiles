@@ -1,14 +1,17 @@
 #! /bin/sh
 
+xrandr --output HDMI-A-0 --mode 2560x1440 --rate 120 &
+xset r rate 200 25 &
+~/.fehbg &
 pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
-picom  --config ~/.config/picom/picom --experimental-backends -b
+picom --config ~/.config/picom/picom -b
 
 bspc monitor -d I II III
 
 bspc config border_width         2
 bspc config border_radius       10
-bspc config focused_border_color \#e06c75
+bspc config focused_border_color \#7da6ff
 bspc config window_gap          8
 
 bspc config split_ratio          0.5
