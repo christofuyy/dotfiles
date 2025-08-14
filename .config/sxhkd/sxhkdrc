@@ -3,15 +3,15 @@
 #
 
 # terminal emulator
-super + Return
-	kitty
+alt + Return
+	/usr/local/bin/kitty
 
 # program launcher
 super + @space
 	dmenu_run
 
 # make sxhkd reload its configuration files:
-super + Escape
+alt + Escape
 	pkill -USR1 -x sxhkd; notify-send 'sxhkd' 'Reloaded config'
 
 #
@@ -43,7 +43,7 @@ super + g
 #
 
 # set the window state
-super + {t,shift + t,s,f}
+alt + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -55,7 +55,7 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
+alt + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
@@ -81,7 +81,7 @@ super + {grave,Tab}
 # 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{u,i,o}
+alt + {_,shift + }{u,i,o}
 	bspc {desktop -f,node -d} '^{1,2,3}'
 
 #
