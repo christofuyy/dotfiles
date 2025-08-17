@@ -7,7 +7,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
 picom --config ~/.config/picom/picom -b
 
-bspc monitor -d I II III
+bspc monitor -d I II III IV
 
 bspc config border_width         2
 bspc config border_radius       10

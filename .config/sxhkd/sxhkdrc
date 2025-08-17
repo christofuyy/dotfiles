@@ -81,8 +81,8 @@ super + {grave,Tab}
 # 	bspc wm -h on
 
 # focus or send to the given desktop
-alt + {_,shift + }{u,i,o}
-	bspc {desktop -f,node -d} '^{1,2,3}'
+alt + {_,shift + }{u,i,o,p}
+	bspc {desktop -f,node -d} '^{1,2,3,4}'
 
 #
 # preselect
