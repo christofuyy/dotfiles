@@ -6,6 +6,10 @@
 alt + Return
 	kitty
 
+# browser
+super + F2
+	mullvad-browser
+
 # program launcher
 super + @space
 	dmenu_run
