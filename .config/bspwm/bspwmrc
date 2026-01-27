@@ -12,7 +12,8 @@ xset r rate 300 25 &
 ~/.fehbg &
 pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
-picom --config ~/.config/picom/picom -b
+picom --config ~/.config/picom/picom -b &
+qpwgraph -a -x -m
 
 bspc monitor $PRIMARY_MONITOR_NAME -d I II III IV
 if [[ $SECOND_MONITOR_CONNECTED ]]; then
