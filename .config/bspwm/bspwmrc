@@ -1,13 +1,23 @@
 #! /bin/sh
 
-xrandr --output HDMI-A-0 --mode 2560x1440 --rate 120 &
+PRIMARY_MONITOR_NAME='HDMI-A-0'
+SECOND_MONITOR_NAME='DisplayPort-2'
+SECOND_MONITOR_CONNECTED=$(xrandr -q | grep "${SECOND_MONITOR_NAME} connected")
+
+xrandr --output $PRIMARY_MONITOR_NAME --primary --mode 2560x1440 --rate 59.95 &
+if [[ $SECOND_MONITOR_CONNECTED ]]; then
+  xrandr --output $SECOND_MONITOR_NAME --mode 5120x1440 --rate 59.98 --right-of $PRIMARY_MONITOR_NAME &
+fi
 xset r rate 200 25 &
 ~/.fehbg &
 pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
 picom --config ~/.config/picom/picom -b
 
-bspc monitor -d I II III IV
+bspc monitor $PRIMARY_MONITOR_NAME -d I II III IV
+if [[ $SECOND_MONITOR_CONNECTED ]]; then
+  bspc monitor $SECOND_MONITOR_NAME -d V
+fi
 
 bspc config border_width         2
 bspc config border_radius       10
