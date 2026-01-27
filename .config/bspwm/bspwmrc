@@ -8,7 +8,7 @@ xrandr --output $PRIMARY_MONITOR_NAME --primary --mode 2560x1440 --rate 59.95 &
 if [[ $SECOND_MONITOR_CONNECTED ]]; then
   xrandr --output $SECOND_MONITOR_NAME --mode 5120x1440 --rate 59.98 --right-of $PRIMARY_MONITOR_NAME &
 fi
-xset r rate 200 25 &
+xset r rate 300 25 &
 ~/.fehbg &
 pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
