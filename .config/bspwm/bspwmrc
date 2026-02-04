@@ -14,6 +14,7 @@ pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
 picom --config ~/.config/picom/picom -b &
 qpwgraph -a -x -m &
+solaar -w hide &
 
 bspc monitor $PRIMARY_MONITOR_NAME -d I II III IV
 if [[ $SECOND_MONITOR_CONNECTED ]]; then
