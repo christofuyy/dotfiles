@@ -147,3 +147,7 @@ XF86AudioMute
 
 XF86Audio{Raise,Lower}Volume
   pactl set-sink-volume @DEFAULT_SINK@ {+,-}5%
+
+# laptop screen
+XF86MonBrightness{Up,Down}
+  brightnessctl set 5%{+,-}
