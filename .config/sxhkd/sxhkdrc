@@ -151,3 +151,9 @@ XF86Audio{Raise,Lower}Volume
 # laptop screen
 XF86MonBrightness{Up,Down}
   brightnessctl set 5%{+,-}
+
+{shift + Print, super + shift + 4}
+  scrot --select ~/Desktop/%Y-%m-%d_%H:%M:%S.png && notify-send 'Screenshot taken' 'Saved to ~/Desktop'
+
+{Print, super + shift + 3}
+  scrot ~/Desktop/%Y-%m-%d_%H:%M:%S.png && notify-send 'Screenshot taken' 'Saved to ~/Desktop'
