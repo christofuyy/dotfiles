@@ -9,6 +9,7 @@ if [[ $SECOND_MONITOR_CONNECTED ]]; then
   xrandr --output $SECOND_MONITOR_NAME --mode 5120x1440 --rate 59.98 --right-of $PRIMARY_MONITOR_NAME &
 fi
 xset r rate 250 25 &
+xsetroot -cursor_name left_ptr
 ~/.fehbg &
 pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
