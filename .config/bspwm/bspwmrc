@@ -7,6 +7,8 @@ SECOND_MONITOR_CONNECTED=$(xrandr -q | grep "${SECOND_MONITOR_NAME} connected")
 xrandr --output $PRIMARY_MONITOR_NAME --primary --mode 2560x1440 --rate 59.95 &
 if [[ $SECOND_MONITOR_CONNECTED ]]; then
   xrandr --output $SECOND_MONITOR_NAME --mode 5120x1440 --rate 59.98 --right-of $PRIMARY_MONITOR_NAME &
+else
+  xrandr --output $SECOND_MONITOR_NAME --off
 fi
 xset r rate 250 25 &
 xsetroot -cursor_name left_ptr
@@ -20,6 +22,8 @@ solaar -w hide &
 bspc monitor $PRIMARY_MONITOR_NAME -d I II III IV
 if [[ $SECOND_MONITOR_CONNECTED ]]; then
   bspc monitor $SECOND_MONITOR_NAME -d V
+else
+  bspc monitor $SECOND_MONITOR_NAME --remove
 fi
 
 bspc config border_width         2
