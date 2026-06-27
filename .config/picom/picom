@@ -116,5 +116,6 @@ rules = (
 	{ match = "popup_menu"; opacity = 0.7; },
 	{ match = "dropdown_menu"; opacity = 0.7; },
   { match = "name = 'scrot'"; blur-background = false; rounded-corners = false },
+  { match = "! name ~= ''"; opacity=1.0;})
 
 # picom -b to daemonize
