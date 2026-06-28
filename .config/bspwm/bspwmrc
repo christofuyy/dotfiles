@@ -12,7 +12,7 @@ else
 fi
 xset r rate 250 25 &
 xsetroot -cursor_name left_ptr
-~/.fehbg &
+~/.config/feh/.fehbg &
 pgrep -x sxhkd > /dev/null || sxhkd &
 ~/.config/polybar/launch.sh &
 picom --config ~/.config/picom/picom -b &
